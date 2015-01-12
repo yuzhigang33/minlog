@@ -6,7 +6,6 @@ nohup.out
 coverage.html
 cov/
 .idea/
-out/
 .cov/
 .lock-wscript
 build/
