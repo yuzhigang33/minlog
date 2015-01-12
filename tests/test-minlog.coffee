@@ -9,12 +9,12 @@ cwd = process.cwd()
 
 describe 'minlog', ->
   options = null
-  fileName = moment().format "[test/test-]YYYY-MM-DD[.log]"
+  fileName = moment().format "[tests/test-]YYYY-MM-DD[.log]"
   beforeEach ->
     options =
       duration   : 5000
       buffLength : 1000
-      fileName   : "[test/test-]YYYY-MM-DD[.log]"
+      fileName   : "[tests/test-]YYYY-MM-DD[.log]"
 
   afterEach (done)->
     fs.unlinkSync fileName

@@ -11,7 +11,7 @@ class MinLog
   constructor: (options) ->
     @options = os {
       duration   : 2000
-      buffLength : 1000
+      buffLength : 0
       fileName   : defaultAccessLogFile
     }, options
 

@@ -10,9 +10,6 @@ out/
 .cov/
 .lock-wscript
 build/
-config/config.js
-dump.rdb
-hsf_java/*/target/
 .tmp
 assets.json
 *.min.*.js
@@ -21,13 +18,4 @@ bin/*.json
 /run
 /log
 /logs
-/tests/exec
-/tests/logs
-/etc/config.yaml
-/etc/init/config.yaml
-/etc/admin/config.yaml
-/etc/outside/config.yaml
-/etc/deploy/config.yaml
-/etc/ysf/config.yaml
-persistence.js
 /bin/*.zip
