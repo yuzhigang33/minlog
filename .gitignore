@@ -14,6 +14,7 @@ assets.json
 *.min.*.js
 *.min.*.css
 bin/*.json
+/out/test/
 /run
 /log
 /logs

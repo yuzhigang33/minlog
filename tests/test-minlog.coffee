@@ -17,7 +17,7 @@ describe 'minlog', ->
       fileName   : "[tests/test-]YYYY-MM-DD[.log]"
 
   afterEach (done)->
-    fs.unlinkSync fileName
+    fs.unlinkSync fileName if fs.existsSync fileName
     done()
 
   it 'write because buffLength', (done) ->
@@ -75,5 +75,14 @@ describe 'minlog', ->
       expect(/WARNING msg/.test str[4]).to.be.ok
       expect(/ERROR msg/.test str[6]).to.be.ok
       expect(mlog.buffer.length).to.be 0
+      done()
+    , 300
+
+  it 'stream on error occoured', (done) ->
+    mlog = minlog os options, {fileName: '[/private/test]'}
+    mlog.info  'msg\n'
+    setTimeout ->
+      exists = fs.existsSync '/private/test.log', 'utf-8'
+      expect(exists).not.to.be.ok
       done()
     , 300

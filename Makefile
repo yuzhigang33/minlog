@@ -75,6 +75,6 @@ test-cov: -pre-test-cov
 
 clean:
 	@echo 'clean'
-	@-rm -fr out
+	@-rm -fr out/test
 	#@-rm -f package.json
 	@-rm -f coverage.html

@@ -25,7 +25,7 @@ class MinLog
   newStream: (fileName) ->
     @log_day = moment().format 'YYYY-MM-DD'
     stream = fs.createWriteStream fileName, {flags: 'a'}
-    stream.on 'error', (e) -> console.error 'log stream ocur error', e
+    stream.on 'error', (e) -> console.error 'log stream occur error', e
     stream.on 'open', ->
     stream.on 'close', ->
     @stream = stream
