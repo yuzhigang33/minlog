@@ -32,7 +32,7 @@ describe 'minlog', ->
     , 300
 
   it 'write because duration', (done) ->
-    mlog = minlog os options, {duration: 1}
+    mlog = minlog os options, {duration: 100}
     mlog.write 'msg\n'
     mlog.write 'msg\n'
     setTimeout ->

@@ -16,7 +16,7 @@ class MinLog
     }, options
 
     @log_day = moment().format 'YYYY-MM-DD'
-    @lastCheckTime = Date.now()
+    # @lastCheckTime = Date.now()
     @buffer = []
     fileName = moment().format @options.fileName
     @stream = @newStream fileName
@@ -60,10 +60,8 @@ class MinLog
       @newStream moment().format @options.fileName
 
   _checkBuffer: ->
-    now = Date.now()
-    if now - @lastCheckTime > @options.duration
+    if @buffer.length isnt 0
       @stream.write( @buffer.join '' )
-      @lastCheckTime = now
       @buffer.length = 0
     setTimeout @_checkBuffer.bind(@), @options.duration
 
