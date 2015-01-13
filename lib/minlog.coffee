@@ -21,6 +21,7 @@ class MinLog
     fileName = moment().format @options.fileName
     @stream = @newStream fileName
     @_checkFile()
+    @_checkBuffer()
 
   newStream: (fileName) ->
     @log_day = moment().format 'YYYY-MM-DD'
@@ -35,13 +36,13 @@ class MinLog
     if @buffer.length > @options.buffLength
       @stream.write( @buffer.join '' )
       @buffer.length = 0
-      return
-
-    now = Date.now()
-    if now - @lastCheckTime > @options.duration
-      @stream.write( @buffer.join '' )
-      @lastCheckTime = now
-      @buffer.length = 0
+    #   return
+    #
+    # now = Date.now()
+    # if now - @lastCheckTime > @options.duration
+    #   @stream.write( @buffer.join '' )
+    #   @lastCheckTime = now
+    #   @buffer.length = 0
 
   info: (str) ->
     @write '[' + new Date + '] ' + 'INFO ' +  str + '\n'
@@ -64,6 +65,14 @@ class MinLog
       @stream.end() # end stream
       @stream = null # clear object
       @newStream moment().format @options.fileName
+
+  _checkBuffer: ->
+    now = Date.now()
+    if now - @lastCheckTime > @options.duration
+      @stream.write( @buffer.join '' )
+      @lastCheckTime = now
+      @buffer.length = 0
+    setTimeout @_checkBuffer.bind(@), @options.duration
 
 
 module.exports = (options) ->

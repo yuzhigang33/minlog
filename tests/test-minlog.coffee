@@ -34,15 +34,15 @@ describe 'minlog', ->
   it 'write because duration', (done) ->
     mlog = minlog os options, {duration: 1}
     mlog.write 'msg\n'
+    mlog.write 'msg\n'
     setTimeout ->
-      mlog.write 'msg\n'
       str = fs.readFileSync fileName, 'utf-8'
       expect(str).to.be 'msg\nmsg\n'
       expect(mlog.buffer.length).to.be 0
       done()
     , 300
 
-  it 'info level', (done) ->
+  it 'log levels', (done) ->
     mlog = minlog os options, {buffLength: 1}
     mlog.info  'msg\n'
     mlog.debug 'msg\n'
