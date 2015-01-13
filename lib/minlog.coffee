@@ -36,13 +36,6 @@ class MinLog
     if @buffer.length > @options.buffLength
       @stream.write( @buffer.join '' )
       @buffer.length = 0
-    #   return
-    #
-    # now = Date.now()
-    # if now - @lastCheckTime > @options.duration
-    #   @stream.write( @buffer.join '' )
-    #   @lastCheckTime = now
-    #   @buffer.length = 0
 
   info: (str) ->
     @write '[' + new Date + '] ' + 'INFO ' +  str + '\n'
