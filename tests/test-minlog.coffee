@@ -42,38 +42,46 @@ describe 'minlog', ->
       done()
     , 300
 
-  it 'log levels', (done) ->
+  it 'log info', (done) ->
     mlog = minlog os options, {buffLength: 1}
-    mlog.info  'msg\n'
-    mlog.debug 'msg\n'
-    mlog.warn  'msg\n'
-    mlog.error 'msg\n'
+    mlog.info 'msg'
+    mlog.info 'msg'
     setTimeout ->
       str = fs.readFileSync fileName, 'utf-8'
       str = str.split '\n'
-      expect(/INFO msg/.test str[0]).to.be.ok
-      expect(/DEBUG msg/.test str[2]).to.be.ok
-      expect(/WARNING msg/.test str[4]).to.be.ok
-      expect(/ERROR msg/.test str[6]).to.be.ok
+      expect(str.length).to.be 3
+      expect(str[0].length).to.be '2015-01-15 14:28:16 msg'.length
       expect(mlog.buffer.length).to.be 0
       done()
     , 300
+
+  # it 'log levels', (done) ->
+  #   mlog = minlog os options, {buffLength: 1}
+  #   mlog.info  'msg\n'
+  #   mlog.debug 'msg\n'
+  #   mlog.warn  'msg\n'
+  #   mlog.error 'msg\n'
+  #   setTimeout ->
+  #     str = fs.readFileSync fileName, 'utf-8'
+  #     str = str.split '\n'
+  #     expect(/INFO msg/.test str[0]).to.be.ok
+  #     expect(/DEBUG msg/.test str[2]).to.be.ok
+  #     expect(/WARNING msg/.test str[4]).to.be.ok
+  #     expect(/ERROR msg/.test str[6]).to.be.ok
+  #     expect(mlog.buffer.length).to.be 0
+  #     done()
+  #   , 300
 
   it 'check file', (done) ->
     mlog = minlog os options, {buffLength: 1}
     mlog.log_day = '2014-01-01'
     mlog._checkFile()
-    mlog.info  'msg\n'
-    mlog.debug 'msg\n'
-    mlog.warn  'msg\n'
-    mlog.error 'msg\n'
+    mlog.info 'msg'
+    mlog.info 'msg'
     setTimeout ->
       str = fs.readFileSync fileName, 'utf-8'
       str = str.split '\n'
-      expect(/INFO msg/.test str[0]).to.be.ok
-      expect(/DEBUG msg/.test str[2]).to.be.ok
-      expect(/WARNING msg/.test str[4]).to.be.ok
-      expect(/ERROR msg/.test str[6]).to.be.ok
+      expect(str.length).to.be 3
       expect(mlog.buffer.length).to.be 0
       done()
     , 300

@@ -38,16 +38,26 @@ class MinLog
       @buffer.length = 0
 
   info: (str) ->
-    @write '[' + new Date + '] ' + 'INFO ' +  str + '\n'
+    time = @_timeFormat()  # '2015-01-15 14:28:16'
+    @write  time + ' ' + str + '\n'
 
-  debug: (str) ->
-    @write '[' + new Date + '] ' + 'DEBUG ' +  str + '\n'
+  # debug: (str) ->
+  #   @write '[' + new Date + '] ' + 'DEBUG ' +  str + '\n'
+  #
+  # warn: (str) ->
+  #   @write '[' + new Date + '] ' + 'WARNING ' +  str + '\n'
+  #
+  # error: (str) ->
+  #   @write '[' + new Date + '] ' + 'ERROR ' +  str + '\n'
 
-  warn: (str) ->
-    @write '[' + new Date + '] ' + 'WARNING ' +  str + '\n'
-
-  error: (str) ->
-    @write '[' + new Date + '] ' + 'ERROR ' +  str + '\n'
+  _timeFormat: ->
+    now = new Date
+    y = now.getFullYear()
+    m = now.getMonth()
+    m = if (m < 9) then '0' + (m + 1) else (m + 1)
+    d = now.getDate()
+    time = now.toLocaleTimeString()
+    y + '-' + m + '-' + d + ' ' + time
 
   #检查日志文件的日期，不是当天的，就新建一个文件。
   _checkFile: ->
