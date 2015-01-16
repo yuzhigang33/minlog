@@ -22,11 +22,11 @@ MinLog = (function() {
       fileName: defaultAccessLogFile
     }, options);
     this.log_day = moment().format('YYYY-MM-DD');
-    this.lastCheckTime = Date.now();
     this.buffer = [];
     fileName = moment().format(this.options.fileName);
     this.stream = this.newStream(fileName);
     this._checkFile();
+    this._checkBuffer();
   }
 
   MinLog.prototype.newStream = function(fileName) {
@@ -36,7 +36,7 @@ MinLog = (function() {
       flags: 'a'
     });
     stream.on('error', function(e) {
-      return console.error('log stream ocur error', e);
+      return console.error('log stream occur error', e);
     });
     stream.on('open', function() {});
     stream.on('close', function() {});
@@ -44,35 +44,28 @@ MinLog = (function() {
   };
 
   MinLog.prototype.write = function(str) {
-    var now;
     this.buffer.push(str);
     if (this.buffer.length > this.options.buffLength) {
       this.stream.write(this.buffer.join(''));
-      this.buffer.length = 0;
-      return;
-    }
-    now = Date.now();
-    if (now - this.lastCheckTime > this.options.duration) {
-      this.stream.write(this.buffer.join(''));
-      this.lastCheckTime = now;
       return this.buffer.length = 0;
     }
   };
 
   MinLog.prototype.info = function(str) {
-    return this.write('[' + new Date + '] ' + 'INFO ' + str + '\n');
+    var time;
+    time = this._timeFormat();
+    return this.write(time + ' ' + str + '\n');
   };
 
-  MinLog.prototype.debug = function(str) {
-    return this.write('[' + new Date + '] ' + 'DEBUG ' + str + '\n');
-  };
-
-  MinLog.prototype.warn = function(str) {
-    return this.write('[' + new Date + '] ' + 'WARNING ' + str + '\n');
-  };
-
-  MinLog.prototype.error = function(str) {
-    return this.write('[' + new Date + '] ' + 'ERROR ' + str + '\n');
+  MinLog.prototype._timeFormat = function() {
+    var d, m, now, time, y;
+    now = new Date;
+    y = now.getFullYear();
+    m = now.getMonth();
+    m = m < 9 ? '0' + (m + 1) : m + 1;
+    d = now.getDate();
+    time = now.toLocaleTimeString();
+    return y + '-' + m + '-' + d + ' ' + time;
   };
 
   MinLog.prototype._checkFile = function() {
@@ -85,6 +78,14 @@ MinLog = (function() {
       this.stream = null;
       return this.newStream(moment().format(this.options.fileName));
     }
+  };
+
+  MinLog.prototype._checkBuffer = function() {
+    if (this.buffer.length !== 0) {
+      this.stream.write(this.buffer.join(''));
+      this.buffer.length = 0;
+    }
+    return setTimeout(this._checkBuffer.bind(this), this.options.duration);
   };
 
   return MinLog;
