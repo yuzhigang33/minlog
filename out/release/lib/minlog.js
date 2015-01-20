@@ -18,7 +18,7 @@ MinLog = (function() {
     var fileName;
     this.options = os({
       duration: 2000,
-      buffLength: 0,
+      bufferLength: 0,
       fileName: defaultAccessLogFile
     }, options);
     this.log_day = moment().format('YYYY-MM-DD');
@@ -45,7 +45,7 @@ MinLog = (function() {
 
   MinLog.prototype.write = function(str) {
     this.buffer.push(str);
-    if (this.buffer.length > this.options.buffLength) {
+    if (this.buffer.length > this.options.bufferLength) {
       this.stream.write(this.buffer.join(''));
       return this.buffer.length = 0;
     }

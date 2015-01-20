@@ -13,7 +13,7 @@ describe 'minlog', ->
   beforeEach ->
     options =
       duration   : 5000
-      buffLength : 1000
+      bufferLength : 1000
       fileName   : "[tests/test-]YYYY-MM-DD[.log]"
 
   afterEach (done)->
@@ -21,7 +21,7 @@ describe 'minlog', ->
     done()
 
   it 'write because buffLength', (done) ->
-    mlog = minlog os options, {buffLength: 1}
+    mlog = minlog os options, {bufferLength: 1}
     mlog.write 'msg\n'
     mlog.write 'msg\n'
     setTimeout ->
@@ -43,7 +43,7 @@ describe 'minlog', ->
     , 300
 
   it 'log info', (done) ->
-    mlog = minlog os options, {buffLength: 1}
+    mlog = minlog os options, {bufferLength: 1}
     mlog.info 'msg'
     mlog.info 'msg'
     setTimeout ->
@@ -73,7 +73,7 @@ describe 'minlog', ->
   #   , 300
 
   it 'check file', (done) ->
-    mlog = minlog os options, {buffLength: 1}
+    mlog = minlog os options, {bufferLength: 1}
     mlog.log_day = '2014-01-01'
     mlog._checkFile()
     mlog.info 'msg'

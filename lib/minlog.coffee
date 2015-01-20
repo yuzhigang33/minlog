@@ -11,7 +11,7 @@ class MinLog
   constructor: (options) ->
     @options = os {
       duration   : 2000
-      buffLength : 0
+      bufferLength : 0
       fileName   : defaultAccessLogFile
     }, options
 
@@ -33,7 +33,7 @@ class MinLog
 
   write: (str) ->
     @buffer.push str
-    if @buffer.length > @options.buffLength
+    if @buffer.length > @options.bufferLength
       @stream.write( @buffer.join '' )
       @buffer.length = 0
 
