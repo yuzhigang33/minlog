@@ -64,6 +64,7 @@ MinLog = (function() {
     m = now.getMonth();
     m = m < 9 ? '0' + (m + 1) : m + 1;
     d = now.getDate();
+    d = d < 10 ? '0' + d : d;
     time = now.toLocaleTimeString();
     return y + '-' + m + '-' + d + ' ' + time;
   };
