@@ -56,6 +56,7 @@ class MinLog
     m = now.getMonth()
     m = if (m < 9) then '0' + (m + 1) else (m + 1)
     d = now.getDate()
+    d = if (d < 10) then '0' + d else d
     time = now.toLocaleTimeString()
     y + '-' + m + '-' + d + ' ' + time
 
