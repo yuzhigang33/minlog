@@ -1,9 +1,10 @@
-expect = require 'expect.js'
-path = require 'path'
+'use strict';
 fs   = require 'fs'
-os   = require 'options-stream'
+path = require 'path'
+_    = require 'lodash'
+expect = require 'expect.js'
 moment = require 'moment'
-minlog = require '../lib/minlog'
+minlog = require '../'
 
 cwd = process.cwd()
 
@@ -21,7 +22,7 @@ describe 'minlog', ->
     done()
 
   it 'write because buffLength', (done) ->
-    mlog = minlog os options, {bufferLength: 1}
+    mlog = minlog _.assign options, {bufferLength: 1}
     mlog.write 'msg\n'
     mlog.write 'msg\n'
     setTimeout ->
@@ -32,7 +33,7 @@ describe 'minlog', ->
     , 300
 
   it 'write because duration', (done) ->
-    mlog = minlog os options, {duration: 100}
+    mlog = minlog _.assign options, {duration: 100}
     mlog.write 'msg\n'
     mlog.write 'msg\n'
     setTimeout ->
@@ -43,7 +44,7 @@ describe 'minlog', ->
     , 300
 
   it 'log info', (done) ->
-    mlog = minlog os options, {bufferLength: 1}
+    mlog = minlog _.assign options, {bufferLength: 1}
     mlog.info 'msg'
     mlog.info 'msg'
     setTimeout ->
@@ -56,7 +57,7 @@ describe 'minlog', ->
     , 300
 
   # it 'log levels', (done) ->
-  #   mlog = minlog os options, {buffLength: 1}
+  #   mlog = minlog _.assign options, {buffLength: 1}
   #   mlog.info  'msg\n'
   #   mlog.debug 'msg\n'
   #   mlog.warn  'msg\n'
@@ -73,7 +74,7 @@ describe 'minlog', ->
   #   , 300
 
   it 'check file', (done) ->
-    mlog = minlog os options, {bufferLength: 1}
+    mlog = minlog _.assign options, {bufferLength: 1}
     mlog.log_day = '2014-01-01'
     mlog._checkFile()
     mlog.info 'msg'
@@ -87,7 +88,7 @@ describe 'minlog', ->
     , 300
 
   it 'stream on error occoured', (done) ->
-    mlog = minlog os options, {fileName: '[/private/test]'}
+    mlog = minlog _.assign options, {fileName: '[/private/test]'}
     mlog.info  'msg\n'
     setTimeout ->
       exists = fs.existsSync '/private/test.log', 'utf-8'
