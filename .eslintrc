@@ -167,7 +167,6 @@
       "words": true,
       "nonwords": false
     }],
-    "spaced-comment": [2, "always", { "markers": ["*!"] }],
     "strict": [2, "global"],
     "use-isnan": 2,
     "valid-jsdoc": [2, {

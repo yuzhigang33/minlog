@@ -1,7 +1,7 @@
 /*!
  * minlog: index.js
  * Authors  : 枫弦 <fengxian.yzg@alibaba-inc.com> (https://github.com/yuzhigang33)
- * Create   : 2015-11-04 21:01:57
+ * Create   : 2015-11-04 21:32:55
  * CopyRight 2015 (c) Alibaba Group
  */
 
@@ -48,11 +48,6 @@ MinLog.prototype.write = function (str) {
   }
 };
 
-MinLog.prototype.info = function (str) {
-  const formatedTime = this._timeFormat();
-  this.write(formatedTime + ' ' + str + '\n');
-};
-
 MinLog.prototype._timeFormat = function () {
   const now = new Date();
   const y = now.getFullYear();
@@ -81,6 +76,26 @@ MinLog.prototype._checkBuffer = function () {
     this.buffer.length = 0;
   }
   setTimeout(this._checkBuffer.bind(this), this.options.duration);
+};
+
+MinLog.prototype.info = function (str) {
+  const formatedTime = this._timeFormat();
+  this.write(formatedTime + ' [INFO] ' + str + '\n');
+};
+
+MinLog.prototype.warn = function (str) {
+  const formatedTime = this._timeFormat();
+  this.write(formatedTime + ' [WARN] ' + str + '\n');
+};
+
+MinLog.prototype.debug = function (str) {
+  const formatedTime = this._timeFormat();
+  this.write(formatedTime + ' [DEBUG] ' + str + '\n');
+};
+
+MinLog.prototype.error = function (str) {
+  const formatedTime = this._timeFormat();
+  this.write(formatedTime + ' [ERROR] ' + str + '\n');
 };
 
 module.exports = function (options) {

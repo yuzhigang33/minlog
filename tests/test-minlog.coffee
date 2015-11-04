@@ -51,27 +51,27 @@ describe 'minlog', ->
       str = fs.readFileSync fileName, 'utf-8'
       str = str.split '\n'
       expect(str.length).to.be 3
-      expect(str[0].length).to.be '2015-01-15 14:28:16 msg'.length
+      expect(str[0].length).to.be '2015-01-15 14:28:16 [INFO] msg'.length
       expect(mlog.buffer.length).to.be 0
       done()
     , 300
 
-  # it 'log levels', (done) ->
-  #   mlog = minlog _.assign options, {buffLength: 1}
-  #   mlog.info  'msg\n'
-  #   mlog.debug 'msg\n'
-  #   mlog.warn  'msg\n'
-  #   mlog.error 'msg\n'
-  #   setTimeout ->
-  #     str = fs.readFileSync fileName, 'utf-8'
-  #     str = str.split '\n'
-  #     expect(/INFO msg/.test str[0]).to.be.ok
-  #     expect(/DEBUG msg/.test str[2]).to.be.ok
-  #     expect(/WARNING msg/.test str[4]).to.be.ok
-  #     expect(/ERROR msg/.test str[6]).to.be.ok
-  #     expect(mlog.buffer.length).to.be 0
-  #     done()
-  #   , 300
+  it 'log levels', (done) ->
+    mlog = minlog _.assign options, {bufferLength: 1}
+    mlog.info  'msg\n'
+    mlog.debug 'msg\n'
+    mlog.warn  'msg\n'
+    mlog.error 'msg\n'
+    setTimeout ->
+      str = fs.readFileSync fileName, 'utf-8'
+      str = str.split '\n'
+      expect(/INFO msg/.test str[0]).to.be.ok
+      expect(/DEBUG msg/.test str[2]).to.be.ok
+      expect(/WARNING msg/.test str[4]).to.be.ok
+      expect(/ERROR msg/.test str[6]).to.be.ok
+      expect(mlog.buffer.length).to.be 0
+      done()
+    , 300
 
   it 'check file', (done) ->
     mlog = minlog _.assign options, {bufferLength: 1}
