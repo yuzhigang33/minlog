@@ -1,6 +1,6 @@
 {
   "name": "minlog",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A pretty simple logger for Node.js",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "logger",
     "node.js"
   ],
-  "author": "fengxian.yzg",
+  "author": "枫弦 <fengxian.yzg@alibaba-inc> (https://github.com/yuzhigang33)",
   "license": "MIT",
   "dependencies": {
     "lodash": "~3.10.1",

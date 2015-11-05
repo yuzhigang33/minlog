@@ -7,11 +7,9 @@
 
 'use strict';
 const fs = require('fs');
-const path = require('path');
 const _ = require('lodash');
+const path = require('path');
 const moment = require('moment');
-
-const stdout = require('./stdout');
 
 const cwd = process.cwd();
 const baseName = path.basename(path.basename(process.argv[1], '.js'), '.coffee');
@@ -20,7 +18,7 @@ const defaultLogFile = `[${cwd}/logs/${baseName}-]YYYY-MM-DD[.log]`;
 function MinLog(options) {
   this.options = _.assign({
     duration: 2000,
-    bufferLength: 1000,
+    bufferLength: 0,
     fileName: defaultLogFile
   }, options);
   const fileName = moment().format(this.options.fileName);
@@ -35,7 +33,7 @@ MinLog.prototype._newStream = function (fileName) {
   this.logDate = moment().format('YYYY-MM-DD');
   let stream = fs.createWriteStream(fileName, { flags: 'a' });
   stream.on('error', function (e) {
-    return console.error('log stream occur error', e);
+    return console.error('log stream occur error: ', e);
   });
   stream.on('open', function() {});
   stream.on('close', function() {});
@@ -49,17 +47,6 @@ MinLog.prototype.write = function (str) {
     this.buffer.length = 0;
   }
 };
-
-// MinLog.prototype._timeFormat = function () {
-//   const now = new Date();
-//   const y = now.getFullYear();
-//   let m = now.getMonth();
-//   m = m < 9 ? '0' + (m + 1) : m + 1;
-//   let d = now.getDate();
-//   d = d < 10 ? '0' + d : d;
-//   const time = now.toLocaleTimeString();
-//   return y + '-' + m + '-' + d + ' ' + time;
-// };
 
 MinLog.prototype._checkFile = function () {
   const now = new Date();
@@ -81,7 +68,6 @@ MinLog.prototype._checkBuffer = function () {
 };
 
 MinLog.prototype._log = function (str, level) {
-  // const formatedTime = this._timeFormat();
   const formatedTime = moment().format('YYYY-MM-DD hh:mm:ss');
   this.write(formatedTime + ` ${level} ` + str + '\n');
 };
@@ -108,7 +94,7 @@ MinLog.prototype.trace = function (str) {
 
 module.exports = function (options) {
   if (_.isEmpty(options) || options.stdout) {
-    return stdout;
+    return require('./stdout');
   }
   return new MinLog(options);
 };
