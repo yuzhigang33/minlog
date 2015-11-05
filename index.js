@@ -50,16 +50,16 @@ MinLog.prototype.write = function (str) {
   }
 };
 
-MinLog.prototype._timeFormat = function () {
-  const now = new Date();
-  const y = now.getFullYear();
-  let m = now.getMonth();
-  m = m < 9 ? '0' + (m + 1) : m + 1;
-  let d = now.getDate();
-  d = d < 10 ? '0' + d : d;
-  const time = now.toLocaleTimeString();
-  return y + '-' + m + '-' + d + ' ' + time;
-};
+// MinLog.prototype._timeFormat = function () {
+//   const now = new Date();
+//   const y = now.getFullYear();
+//   let m = now.getMonth();
+//   m = m < 9 ? '0' + (m + 1) : m + 1;
+//   let d = now.getDate();
+//   d = d < 10 ? '0' + d : d;
+//   const time = now.toLocaleTimeString();
+//   return y + '-' + m + '-' + d + ' ' + time;
+// };
 
 MinLog.prototype._checkFile = function () {
   const now = new Date();
@@ -81,7 +81,8 @@ MinLog.prototype._checkBuffer = function () {
 };
 
 MinLog.prototype._log = function (str, level) {
-  const formatedTime = this._timeFormat();
+  // const formatedTime = this._timeFormat();
+  const formatedTime = moment().format('YYYY-MM-DD hh:mm:ss');
   this.write(formatedTime + ` ${level} ` + str + '\n');
 };
 
