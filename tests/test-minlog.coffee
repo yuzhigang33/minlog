@@ -63,8 +63,12 @@ describe 'minlog', ->
     setTimeout ->
       str = fs.readFileSync fileName, 'utf-8'
       str = str.split '\n'
-      expect(str.length).to.be 3
-      expect(str[0].length).to.be '2015-01-15 14:28:16 [INFO] msg'.length
+      str = str[0].split ' '
+      expect(str.length).to.be 4
+      expect(str[0].length).to.be '2015-01-15'.length
+      expect(str[1].length).to.be '09:50:29'.length
+      expect(str[2]).to.be '[INFO]'
+      expect(str[3]).to.be 'msg'
       expect(mlog.buffer.length).to.be 0
       done()
     , 300
