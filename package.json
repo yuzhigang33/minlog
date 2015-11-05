@@ -8,14 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/yuzhigang33/minlog.git"
   },
   "keywords": [
     "log",
+    "logger"
     "node.js"
   ],
   "author": "fengxian.yzg",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "lodash": "~3.10.1",
     "moment": "~2.10.6"
