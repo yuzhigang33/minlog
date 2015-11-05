@@ -43,6 +43,19 @@ describe 'minlog', ->
       done()
     , 300
 
+  it 'write because date change', (done) ->
+    mlog = minlog _.assign options, {duration: 100, bufferLength: 1}
+    mlog.logDate = '1970-01-01'
+    mlog._checkFile()
+    mlog.write 'msg\n'
+    mlog.write 'msg\n'
+    setTimeout ->
+      str = fs.readFileSync fileName, 'utf-8'
+      expect(str).to.be 'msg\nmsg\n'
+      expect(mlog.buffer.length).to.be 0
+      done()
+    , 300
+
   it 'log info', (done) ->
     mlog = minlog _.assign options, {bufferLength: 1}
     mlog.info 'msg'
@@ -57,11 +70,12 @@ describe 'minlog', ->
     , 300
 
   it 'log levels', (done) ->
-    mlog = minlog _.assign options, {bufferLength: 1}
+    mlog = minlog _.assign options, {bufferLength: 4}
     mlog.info  'msg\n'
     mlog.debug 'msg\n'
     mlog.warn  'msg\n'
     mlog.error 'msg\n'
+    mlog.trace 'msg\n'
     setTimeout ->
       str = fs.readFileSync fileName, 'utf-8'
       str = str.split '\n'
@@ -69,6 +83,7 @@ describe 'minlog', ->
       expect(/DEBUG msg/.test str[2]).to.be.ok
       expect(/WARNING msg/.test str[4]).to.be.ok
       expect(/ERROR msg/.test str[6]).to.be.ok
+      expect(/\ msg/.test str[8]).to.be.ok
       expect(mlog.buffer.length).to.be 0
       done()
     , 300
@@ -95,3 +110,14 @@ describe 'minlog', ->
       expect(exists).not.to.be.ok
       done()
     , 300
+
+  it 'stdout', (done) ->
+    mlog = minlog();
+    expect(mlog).to.be.an('object');
+    ret = mlog.info  'msg\n'
+    expect(ret).to.be(undefined);
+    mlog = minlog({stdout:true});
+    expect(mlog).to.be.an('object');
+    ret = mlog.warn  'msg\n'
+    expect(ret).to.be(undefined);
+    done();

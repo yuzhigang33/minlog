@@ -11,6 +11,8 @@ const path = require('path');
 const _ = require('lodash');
 const moment = require('moment');
 
+const stdout = require('./stdout');
+
 const cwd = process.cwd();
 const baseName = path.basename(path.basename(process.argv[1], '.js'), '.coffee');
 const defaultLogFile = `[${cwd}/logs/${baseName}-]YYYY-MM-DD[.log]`;
@@ -78,26 +80,34 @@ MinLog.prototype._checkBuffer = function () {
   setTimeout(this._checkBuffer.bind(this), this.options.duration);
 };
 
-MinLog.prototype.info = function (str) {
+MinLog.prototype._log = function (str, level) {
   const formatedTime = this._timeFormat();
-  this.write(formatedTime + ' [INFO] ' + str + '\n');
+  this.write(formatedTime + ` ${level} ` + str + '\n');
+};
+
+MinLog.prototype.info = function (str) {
+  this._log(str, '[INFO]');
 };
 
 MinLog.prototype.warn = function (str) {
-  const formatedTime = this._timeFormat();
-  this.write(formatedTime + ' [WARN] ' + str + '\n');
+  this._log(str, '[WARN]');
 };
 
 MinLog.prototype.debug = function (str) {
-  const formatedTime = this._timeFormat();
-  this.write(formatedTime + ' [DEBUG] ' + str + '\n');
+  this._log(str, '[DEBUG]');
 };
 
 MinLog.prototype.error = function (str) {
-  const formatedTime = this._timeFormat();
-  this.write(formatedTime + ' [ERROR] ' + str + '\n');
+  this._log(str, '[ERROR]');
+};
+
+MinLog.prototype.trace = function (str) {
+  this._log(str, '');
 };
 
 module.exports = function (options) {
+  if (_.isEmpty(options) || options.stdout) {
+    return stdout;
+  }
   return new MinLog(options);
 };
