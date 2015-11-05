@@ -1,6 +1,6 @@
 # minlog
 
-minlog , A pretty simple logger for Node.js, especially used for access logging for web app.
+A pretty simple and high performance logger for Node.js, especially used for access logging of web app.
 
 # Installation
 
@@ -11,25 +11,27 @@ minlog , A pretty simple logger for Node.js, especially used for access logging 
 ### Getting start
 
 ```javascript
-var log = minlog({
+const MinLog = require('minlog');
+const mlog = MinLog({
   fileName : '[test-]YYYY-MM-DD[.log]'
 });
 ```
 
 available levels
 
-* minlog.info
-* minlog.debug
-* minlog.warn
-* minlog.error
+* mlog.info
+* mlog.warn
+* mlog.debug
+* mlog.error
+* mlog.trace
 
 ## Buffer Log
-you can buffer your access log if you have big visits.
+you can buffer your access log if you have big visits (high qps).
 
 ```javascript
-var log = minlog({
+const mlog = MinLog({
   fileName : '[test-]YYYY-MM-DD[.log]'
-  duration : 5000, // flush buffer time, default is 2000
-  bufferLength : 1000 // max buffer length, default is 0
+  duration : 5000, // flush buffer time, default is 1000ms
+  bufferLength : 1000 // set max buffer length, default is 0
 });
 ```

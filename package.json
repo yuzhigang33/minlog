@@ -1,6 +1,6 @@
 {
   "name": "minlog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A pretty simple logger for Node.js",
   "main": "index.js",
   "scripts": {
