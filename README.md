@@ -1,5 +1,7 @@
 # minlog
 
+![asdf](https://travis-ci.org/yuzhigang33/minlog.svg?branch=master)
+
 A pretty simple and high performance logger for Node.js, especially used for access logging of web app.
 
 # Installation
