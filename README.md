@@ -1,6 +1,7 @@
 # minlog
 
 ![asdf](https://travis-ci.org/yuzhigang33/minlog.svg?branch=master)
+[![Coverage Status](https://coveralls.io/repos/yuzhigang33/minlog/badge.svg?branch=master&service=github)](https://coveralls.io/github/yuzhigang33/minlog?branch=master)
 
 A pretty simple and high performance logger for Node.js, especially used for access logging of web app.
 
