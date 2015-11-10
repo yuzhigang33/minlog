@@ -67,29 +67,34 @@ MinLog.prototype._checkBuffer = function () {
   setTimeout(this._checkBuffer.bind(this), this.options.duration);
 };
 
-MinLog.prototype._log = function (str, level) {
+MinLog.prototype._log = function (args, level) {
   const formatedTime = moment().format('YYYY-MM-DD hh:mm:ss');
-  this.write(formatedTime + ` ${level} ` + str + '\n');
+  this.write(formatedTime + ` ${level} ` + args.join('') + '\n');
 };
 
-MinLog.prototype.info = function (str) {
-  this._log(str, '[INFO]');
+MinLog.prototype.info = function () {
+  const args = Array.prototype.slice.call(arguments);
+  this._log(args, '[INFO]');
 };
 
-MinLog.prototype.warn = function (str) {
-  this._log(str, '[WARN]');
+MinLog.prototype.warn = function () {
+  const args = Array.prototype.slice.call(arguments);
+  this._log(args, '[WARN]');
 };
 
-MinLog.prototype.debug = function (str) {
-  this._log(str, '[DEBUG]');
+MinLog.prototype.debug = function () {
+  const args = Array.prototype.slice.call(arguments);
+  this._log(args, '[DEBUG]');
 };
 
-MinLog.prototype.error = function (str) {
-  this._log(str, '[ERROR]');
+MinLog.prototype.error = function () {
+  const args = Array.prototype.slice.call(arguments);
+  this._log(args, '[ERROR]');
 };
 
-MinLog.prototype.trace = function (str) {
-  this._log(str, '');
+MinLog.prototype.trace = function () {
+  const args = Array.prototype.slice.call(arguments);
+  this._log(args, '');
 };
 
 module.exports = function (options) {
