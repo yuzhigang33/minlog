@@ -69,7 +69,15 @@ MinLog.prototype._checkBuffer = function () {
 
 MinLog.prototype._log = function (args, level) {
   const formatedTime = moment().format('YYYY-MM-DD hh:mm:ss');
-  this.write(formatedTime + ` ${level} ` + args.join('') + '\n');
+  let arr = [];
+  args.forEach(function (a) {
+    if (typeof a === 'string') {
+      arr.push(a);
+    } else {
+      arr.push(JSON.stringify(a));
+    }
+  });
+  this.write(formatedTime + ` ${level} ` + arr.join(' ') + '\n');
 };
 
 MinLog.prototype.info = function () {
