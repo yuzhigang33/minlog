@@ -56,7 +56,7 @@ describe 'minlog', ->
       done()
     , 300
 
-  it 'log info', (done) ->
+  it.only 'log info', (done) ->
     mlog = minlog _.assign options, {bufferLength: 1}
     mlog.info 'msg'
     mlog.info 'msg'

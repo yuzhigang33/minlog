@@ -10,7 +10,7 @@ const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
 const moment = require('moment');
-
+const log = require('./stdout');
 const cwd = process.cwd();
 const baseName = path.basename(path.basename(process.argv[1], '.js'), '.coffee');
 const defaultLogFile = `[${cwd}/logs/${baseName}-]YYYY-MM-DD[.log]`;
@@ -77,6 +77,7 @@ MinLog.prototype._log = function (args, level) {
       arr.push(JSON.stringify(a));
     }
   });
+  log.getLineNumber();
   this.write(formatedTime + ` ${level} ` + arr.join(' ') + '\n');
 };
 
