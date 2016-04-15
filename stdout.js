@@ -10,7 +10,6 @@ const line = require('./line-number');
 function _log(type, color) {
   return function () {
     const args = Array.prototype.slice.call(arguments);
-    line.getLineNumber();
     args.unshift('\x1B[' + color + 'm' + type + '\x1B[0m');
     console.log.apply(this, args);
   };
@@ -25,4 +24,4 @@ let log = {
   trace: _log('[TRACE]', 34)
 };
 
-module.exports = line;
+module.exports = log;
